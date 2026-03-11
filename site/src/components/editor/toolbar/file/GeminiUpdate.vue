@@ -2,9 +2,13 @@
   <!-- Tactical Dialog for Job Description -->
   <UiDialog v-model:open="isOpen">
     <UiDialogTrigger as-child>
-      <UiButton class="gap-x-1.5 w-full h-8 justify-start" variant="ghost" size="sm">
-        <span i-tabler:sparkles text-base />
-        Update with Gemini
+      <UiButton
+        class="h-full px-4 gap-x-2 !shadow-none !active:translate-x-0 !active:translate-y-0"
+        variant="ghost-secondary"
+        size="sm"
+      >
+        <span i-tabler:sparkles text-xl />
+        <span class="hide-on-mobile text-lg uppercase font-bold">Gemini</span>
       </UiButton>
     </UiDialogTrigger>
 
@@ -137,9 +141,17 @@ const openSettings = () => {
 };
 
 const handleUpdate = async () => {
-  if (!jobDescription.value.trim()) return;
+  if (!jobDescription.value.trim() || !data.resumeId) return;
 
   try {
+    // Snapshot before rewrite
+    await storageService.saveVersion(data.resumeId, {
+      timestamp: Date.now(),
+      markdown: data.markdown,
+      css: data.css,
+      styles: toRaw(useStyleStore().styles)
+    });
+
     const result = await updateResume({
       markdown: data.markdown,
       jobDescription: jobDescription.value,

@@ -1,15 +1,19 @@
 <template>
   <UiDialog v-model:open="isOpen">
     <UiDialogTrigger as-child>
-      <UiButton class="gap-x-1.5 w-full h-8 justify-start" variant="ghost" size="sm">
-        <span i-ic:baseline-history text-base />
-        Version History
+      <UiButton
+        class="h-full px-4 gap-x-2 !shadow-none !active:translate-x-0 !active:translate-y-0"
+        variant="ghost-secondary"
+        size="sm"
+      >
+        <span i-ic:baseline-history text-xl />
+        <span class="hide-on-mobile text-lg uppercase font-bold">History</span>
       </UiButton>
     </UiDialogTrigger>
 
     <UiDialogContent class="sm:max-w-md brutalist-card p-0 overflow-hidden">
-      <div class="px-6 pt-6 pb-4 bg-accent border-b-2 border-black dark:border-white">
-        <h2 class="font-black text-xl uppercase tracking-tighter">Version History</h2>
+      <div class="px-6 pt-8 pb-6 bg-accent border-b-2 border-black dark:border-white">
+        <h2 class="font-black text-2xl text-white uppercase tracking-tighter">Version History</h2>
       </div>
 
       <div class="p-6 max-h-96 overflow-y-auto space-y-4 bg-background">
