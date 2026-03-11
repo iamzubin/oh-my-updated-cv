@@ -7,7 +7,8 @@ import { join } from "path";
 import chalk from "chalk";
 
 const INSTALL_DIR = join(homedir(), ".oh-my-cv");
-const REPO_URL = "https://github.com/iamzubin/oh-my-updated-cv.git";
+const REPO_URL_HTTPS = "https://github.com/iamzubin/oh-my-updated-cv.git";
+const REPO_URL_SSH = "git@github.com:iamzubin/oh-my-updated-cv.git";
 const LOG_FILE = join(homedir(), ".oh-my-cv-cli.log");
 
 function log(message, type = "info") {
@@ -76,6 +77,33 @@ function isInstalled() {
   return existsSync(join(INSTALL_DIR, "package.json"));
 }
 
+function cloneWithAuth() {
+  // Try SSH first (no password prompt if key is configured)
+  try {
+    log("Trying SSH authentication...", "info");
+    execSync(`git clone ${REPO_URL_SSH} ${INSTALL_DIR}`, {
+      stdio: "pipe",
+      timeout: 30000
+    });
+    return true;
+  } catch (sshError) {
+    // SSH failed, try HTTPS
+    log("SSH failed, trying HTTPS...", "warning");
+  }
+
+  // Try HTTPS (may prompt for credentials if repo is private)
+  try {
+    log("Cloning with HTTPS...", "info");
+    execSync(`git clone ${REPO_URL_HTTPS} ${INSTALL_DIR}`, {
+      stdio: "inherit"
+    });
+    return true;
+  } catch (httpsError) {
+    log("HTTPS clone failed", "error");
+    return false;
+  }
+}
+
 function install() {
   log("Installing Oh My CV...", "info");
 
@@ -89,7 +117,22 @@ function install() {
     mkdirSync(INSTALL_DIR, { recursive: true });
 
     log("Cloning repository...", "info");
-    execSync(`git clone ${REPO_URL} ${INSTALL_DIR}`, { stdio: "inherit" });
+    const cloned = cloneWithAuth();
+
+    if (!cloned) {
+      log("\n" + chalk.red("Failed to clone repository."), "error");
+      log(chalk.yellow("This might be because:"), "warning");
+      log("1. The repository is private and requires authentication", "info");
+      log("2. You don't have SSH keys configured", "info");
+      log("3. Network connectivity issues\n", "info");
+      log(chalk.blue("Solutions:"), "info");
+      log(
+        "• Make sure you have GitHub SSH keys: https://docs.github.com/en/authentication/connecting-to-github-with-ssh",
+        "info"
+      );
+      log("• Or manually clone the repo and run 'bun install' inside it", "info");
+      return false;
+    }
 
     log("Installing dependencies with bun...", "info");
     execSync("bun install", {
