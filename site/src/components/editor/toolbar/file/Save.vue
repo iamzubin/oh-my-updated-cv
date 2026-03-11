@@ -20,6 +20,13 @@ const { styles } = useStyleStore();
 const save = async () => {
   if (!data.resumeId) return;
 
+  await storageService.saveVersion(data.resumeId, {
+    timestamp: Date.now(),
+    markdown: data.markdown,
+    css: data.css,
+    styles: toRaw(styles)
+  });
+
   await storageService.updateResume({
     id: data.resumeId,
     name: data.resumeName,

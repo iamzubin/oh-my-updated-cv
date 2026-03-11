@@ -7,42 +7,33 @@
       p="x-5 t-30 md:x-20 lt-sm:b-10"
     >
       <div text-center>
-        <h1 text="3xl sm:4xl" v-html="$t('landing.hero')" />
-        <div my-10 text="lg sm:xl"><SharedBrandName /> {{ $t("landing.desc") }}</div>
+        <h1 text="5xl sm:6xl" font-black uppercase tracking-tighter v-html="$t('landing.hero')" />
+        <div my-10 text="xl sm:2xl" font-bold uppercase><SharedBrandName /> {{ $t("landing.desc") }}</div>
 
-        <UiButton
-          :as="NuxtLink"
-          :to="$nuxt.$localePath('/dashboard')"
-          class="text-base h-11"
-        >
+        <UiButton :as="NuxtLink" :to="localePath('/dashboard')" class="text-xl h-14 px-10 uppercase font-black">
           {{ $t("landing.start") }}
         </UiButton>
       </div>
 
-      <div m="t-15 x-auto" grid="~ cols-1 sm:cols-2 gap-y-10" max-w-150>
-        <div v-for="i in [0, 1]" :key="i">
-          <div w-fit sm:mx-auto>
-            <div hstack mb-3 gap-x-1.5>
-              <span
-                :class="[
-                  'rounded-full flex-center size-5',
-                  i ? 'bg-blue-400' : 'bg-primary'
-                ]"
-                text="white xs"
-              >
-                <span :class="i ? 'i-wpf:privacy' : 'i-mdi:rocket-launch'" />
-              </span>
-              <h2 text-foreground>{{ $t(`landing.feats[${i}].title`) }}</h2>
-            </div>
-
-            <ul text="sm muted-foreground" pl-2 ml-4.5 list-disc>
-              <li
-                v-for="line in $t(`landing.feats[${i}].items`).split('<br>')"
-                :key="line"
-                v-html="line"
-              />
-            </ul>
+      <div m="t-20 x-auto" grid="~ cols-1 sm:cols-2 gap-8" max-w-200>
+        <div v-for="i in [0, 1]" :key="i" class="brutalist-card p-6 flex flex-col gap-4">
+          <div hstack gap-x-3>
+            <span
+              :class="['flex-center size-8 brutalist-border', i ? 'bg-info' : 'bg-primary']"
+              text="white lg"
+            >
+              <span :class="i ? 'i-wpf:privacy' : 'i-mdi:rocket-launch'" />
+            </span>
+            <h2 text-2xl font-black uppercase>{{ $t(`landing.feats[${i}].title`) }}</h2>
           </div>
+
+          <ul text="lg font-bold" pl-2 ml-4.5 list-disc space-y-2>
+            <li
+              v-for="line in $t(`landing.feats[${i}].items`).split('<br>')"
+              :key="line"
+              v-html="line"
+            />
+          </ul>
         </div>
       </div>
     </div>
@@ -51,4 +42,6 @@
 
 <script setup lang="ts">
 import { NuxtLink } from "#components";
+
+const localePath = useLocalePath();
 </script>

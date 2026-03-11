@@ -2,7 +2,7 @@
   <div flex="~ col gap-y-2" items-end>
     <UiButton
       size="round"
-      class="group/btn gap-x-1 transition-all bg-gray-500/90 hover:(bg-gray-500 ring-none w-auto px-2) focus-visible:(w-auto px-2)"
+      class="group/btn gap-x-1 transition-all bg-secondary/90 hover:(bg-secondary ring-none w-auto px-2) focus-visible:(w-auto px-2)"
       @click="duplicate"
       :aria-label="$t('dashboard.duplicate')"
     >

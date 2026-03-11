@@ -3,8 +3,8 @@
     <div h-80>
       <div class="resume-card group/card size-fit">
         <nuxt-link
-          :to="$nuxt.$localePath(`/editor/${props.resume.id}`)"
-          class="block border overflow-hidden rounded-md ring-when-focus peer"
+          :to="localePath(`/editor/${props.resume.id}`)"
+          class="block brutalist-border overflow-hidden rounded-none ring-when-focus peer"
           :style="{
             width: `${size.w}px`,
             height: `${size.h}px`
@@ -48,6 +48,7 @@ const emit = defineEmits<{
   (e: "update"): void;
 }>();
 
+const localePath = useLocalePath();
 const { PAPER } = useConstant();
 const size = PAPER.SIZES[props.resume.styles.paper];
 

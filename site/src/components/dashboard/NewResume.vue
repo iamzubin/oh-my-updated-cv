@@ -1,11 +1,11 @@
 <template>
   <div class="w-56 h-80">
     <button
-      class="resume-card group w-[210px] h-[299px] flex-center bg-secondary hover:bg-background ring-when-focus"
+      class="brutalist-card group w-[210px] h-[299px] flex-center bg-secondary hover:bg-background ring-when-focus"
       :aria-label="$t('dashboard.new')"
       @click="newAndSwitch"
     >
-      <span i-ic:round-plus text="5xl muted-foreground group-hover:primary" />
+      <span i-ic:round-plus text="7xl text-white group-hover:primary" />
     </button>
   </div>
 </template>

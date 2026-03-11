@@ -1,7 +1,7 @@
 <template>
-  <div :class="cn('px-4 py-6 text-sm', props.class)">
-    <div hstack gap-x-2 mb-4 text-base>
-      <span v-if="icon" :class="icon" />
+  <div :class="cn('px-4 py-8 text-sm', props.class)">
+    <div hstack gap-x-2 mb-6 text-lg font-black uppercase tracking-tighter>
+      <span v-if="icon" :class="[icon, 'text-xl']" />
       {{ text }}
     </div>
 

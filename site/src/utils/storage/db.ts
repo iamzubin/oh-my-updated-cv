@@ -52,4 +52,12 @@ export interface DbService {
   delete(id: number): DbServiceResponse<DbResume>;
 }
 
+export type DbResumeVersion = {
+  timestamp: number;
+  name?: string;
+  markdown: string;
+  css: string;
+  styles: ResumeStyles;
+};
+
 export type DbServiceConstructor = new () => DbService;

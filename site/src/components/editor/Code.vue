@@ -1,6 +1,6 @@
 <template>
   <TabsRoot
-    class="pane-container overflow-hidden bg-background"
+    class="pane-container overflow-hidden bg-background border-4"
     flex="~ col"
     default-value="markdown"
     @update:model-value="(payload) => activateModel(payload)"

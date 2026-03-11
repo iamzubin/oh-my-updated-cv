@@ -1,17 +1,17 @@
 <template>
-  <div class="flex w-72 h-full">
+  <div class="flex w-full h-full">
     <div
       id="toolbar"
-      class="pane-container overflow-y-scroll hide-scrollbar bg-background"
+      class="pane-container flex-1 overflow-y-scroll hide-scrollbar bg-background"
       lt-lg="bg-accent rounded-none"
     >
       <template v-for="(tool, i) in tools" :key="tool.id">
         <component :is="tool.component" :id="`toolbar-${tool.id}`" />
-        <UiSeparator v-if="i < tools.length - 1" class="w-[calc(100%-32px)] mx-auto" />
+        <div v-if="i < tools.length - 1" class="border-b-2 border-black dark:border-white" />
       </template>
     </div>
 
-    <div flex="center col none gap-1" border="l dashed lg:none" w-10 bg-accent>
+    <div flex="center col none gap-1" border="l-2 border-black dark:border-white" w-12 bg-accent>
       <template v-for="tool in tools" :key="tool.id">
         <UiTooltipProvider :delay-duration="0">
           <UiTooltip>
@@ -19,10 +19,11 @@
               <UiButton
                 size="round"
                 variant="ghost-secondary"
+                class="!shadow-none !active:translate-x-0 !active:translate-y-0"
                 @click="scrollTo(tool.id)"
                 :aria-label="getTooltip(tool.id)"
               >
-                <span :class="[tool.icon, ' size-4']" />
+                <span :class="[tool.icon, ' size-6']" />
               </UiButton>
             </UiTooltipTrigger>
             <UiTooltipContent side="left">

@@ -1,14 +1,11 @@
 <template>
-  <div class="flex gap-2">
-    <UiButton @click="exportToJSON">
-      <span i-ic:baseline-save-as size-4 mr-1 />
+  <div class="flex gap-4">
+    <UiButton variant="outline" class="font-black uppercase h-12 px-6" @click="exportToJSON">
+      <span i-ic:baseline-save-as text-xl mr-2 />
       {{ $t("dashboard.saveas") }}
     </UiButton>
-    <UiButton
-      class="bg-neutral-800 hover:(bg-neutral-800/90 ring-neutral-800/40) dark:(bg-secondary hover:bg-background hover:ring-secondary/40)"
-      @click="open"
-    >
-      <span i-ic:round-upload-file size-4 mr-1 />
+    <UiButton class="bg-accent font-black uppercase h-12 px-6" @click="open">
+      <span i-ic:round-upload-file text-xl mr-2 />
       {{ $t("dashboard.import") }}
     </UiButton>
   </div>

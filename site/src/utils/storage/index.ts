@@ -1,3 +1,4 @@
+import * as localForage from "localforage";
 import { downloadFile } from "@renovamen/utils";
 import type { ValidVersion } from "~/composables/constant";
 import { LocalForageDbService } from "./localForage";
@@ -8,7 +9,8 @@ import type {
   StorageJson,
   StorageJsonData,
   DbResumeUpdate,
-  DbResumeEmpty
+  DbResumeEmpty,
+  DbResumeVersion
 } from "./db";
 
 const AVAILABLE_SERVICES: Record<string, DbService> = {
@@ -25,6 +27,27 @@ export class StorageService {
 
     this._version = VERSION.CURRENT;
     this._db = AVAILABLE_SERVICES[service];
+  }
+
+  public async getVersions(id: number): Promise<DbResumeVersion[]> {
+    try {
+      const history = await localForage.getItem<DbResumeVersion[]>(`ohmycv_history_${id}`);
+      return history || [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  public async saveVersion(id: number, version: DbResumeVersion) {
+    try {
+      const history = await this.getVersions(id);
+      history.push(version);
+      // Keep only last 50 versions to avoid bloat
+      if (history.length > 50) history.shift();
+      await localForage.setItem(`ohmycv_history_${id}`, history);
+    } catch (e) {
+      console.error("Failed to save version:", e);
+    }
   }
 
   private _createEmptyResume(): DbResumeEmpty {

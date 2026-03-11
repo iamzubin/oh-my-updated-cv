@@ -19,22 +19,31 @@ export default defineConfig({
       "hide-on-mobile": "lt-md:hidden",
       "ring-when-focus":
         "ring-offset-background focus-visible:(outline-none ring-2 ring-ring ring-offset-2)",
-      "shadow-c": "shadow shadow-gray-300 dark:shadow-neutral-900",
+      "shadow-c": "shadow shadow-blue-200 dark:shadow-black",
+      "brutalist-border": "border-2 border-black dark:border-[hsl(20,14%,85%)]",
+      "brutalist-shadow": "shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_hsla(20,14%,85%,1)]",
+      "brutalist-shadow-sm": "shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_hsla(20,14%,85%,1)]",
+      "brutalist-card": "brutalist-border brutalist-shadow bg-card rounded-none transition-all",
+      "brutalist-button": "brutalist-border brutalist-shadow rounded-none transition-all active:(translate-x-[2px] translate-y-[2px] shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]) dark:active:shadow-[2px_2px_0px_0px_hsla(20,14%,85%,1)]",
       "resume-card":
-        "relative mx-auto rounded-md duration-150 hover:(-translate-y-3 drop-shadow-xl)"
+        "relative mx-auto rounded-none duration-150 hover:(-translate-y-2 brutalist-shadow)"
     }
   ],
   preflights: [
     {
       getCSS: () => `
         :root {
-          --success: 142 71% 29%;
-          --info: 224 77% 48%;
+          --success: 142.1 70.6% 45.3%;
+          --info: 199 89% 48%;
+          --warning: 48 96% 53%;
+          --danger: 0 84.2% 60.2%;
         }
 
         .dark {
-          --success: 142 76% 40%;
-          --info: 209 87% 57%;
+          --success: 140 100% 50%;
+          --info: 199 100% 60%;
+          --warning: 45 100% 50%;
+          --danger: 0 100% 64%;
         }
       `
     }
@@ -47,7 +56,9 @@ export default defineConfig({
     },
     colors: {
       success: "hsl(var(--success))",
-      info: "hsl(var(--info))"
+      info: "hsl(var(--info))",
+      warning: "hsl(var(--warning))",
+      danger: "hsl(var(--danger))"
     }
   },
   presets: [
@@ -60,45 +71,55 @@ export default defineConfig({
     }),
     presetWebFonts({
       fonts: {
-        ui: "Lato:400,700"
+        ui: "Inter:400,700,900"
       }
     }),
     presetAnimations(),
     presetShadcn(
       {
         color: {
-          base: "orange",
+          base: "stone",
           light: {
-            background: "0 0% 100%",
-            foreground: "215 25% 27%",
+            background: "0 0% 96%",
+            foreground: "0 0% 0%",
             card: "0 0% 100%",
-            "card-foreground": "215 25% 27%",
+            "card-foreground": "0 0% 0%",
             popover: "0 0% 100%",
-            "popover-foreground": "215 25% 27%",
-            secondary: "220 13% 91%",
-            "secondary-foreground": "220.9 39.3% 11%", // gray
-            muted: "220 14.3% 95.9%", // gray
-            "muted-foreground": "220 8.9% 46.1%", // gray
-            accent: "220 14.3% 95.9%", // gray
-            "accent-foreground": "220.9 39.3% 11%", // gray
-            border: "216 12% 85%",
-            input: "216 12% 85%"
+            "popover-foreground": "0 0% 0%",
+            primary: "0 84.2% 60.2%",
+            "primary-foreground": "0 0% 100%",
+            secondary: "32 95% 44%",
+            "secondary-foreground": "0 0% 100%",
+            muted: "0 0% 92%",
+            "muted-foreground": "0 0% 20%",
+            accent: "142.1 70.6% 45.3%",
+            "accent-foreground": "0 0% 100%",
+            destructive: "0 84.2% 60.2%",
+            "destructive-foreground": "0 0% 100%",
+            border: "0 0% 0%",
+            input: "0 0% 0%",
+            ring: "0 84.2% 60.2%"
           },
           dark: {
-            background: "213 12% 15%",
-            foreground: "0 0% 90%",
-            card: "213 12% 15%",
-            "card-foreground": "0 0% 90%",
-            popover: "213 12% 15%",
-            "popover-foreground": "0 0% 90%",
-            secondary: "230 5% 36%",
-            "secondary-foreground": "0 0% 98%", // neutral
-            muted: "220 10% 21%",
-            "muted-foreground": "0 0% 63.9%", // neutral
-            accent: "220 10% 21%",
-            "accent-foreground": "0 0% 98%", // neutral
-            border: "0 0% 45%",
-            input: "0 0% 45%"
+            background: "20 14% 4%",
+            foreground: "20 14% 98%",
+            card: "20 14% 7%",
+            "card-foreground": "20 14% 98%",
+            popover: "20 14% 4%",
+            "popover-foreground": "20 14% 98%",
+            primary: "0 100% 64%",
+            "primary-foreground": "0 0% 100%",
+            secondary: "30 100% 50%",
+            "secondary-foreground": "0 0% 100%",
+            muted: "20 14% 15%",
+            "muted-foreground": "20 14% 80%",
+            accent: "140 100% 50%",
+            "accent-foreground": "0 0% 100%",
+            destructive: "0 100% 64%",
+            "destructive-foreground": "0 0% 100%",
+            border: "20 14% 85%",
+            input: "20 14% 85%",
+            ring: "0 100% 64%"
           }
         }
       },

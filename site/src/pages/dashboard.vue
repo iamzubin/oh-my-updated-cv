@@ -3,8 +3,8 @@
     <SharedHeader />
 
     <div class="workspace max-w-310 mx-auto" flex="~ col" p="x-4 y-8">
-      <div class="px-2 space-y-2" md="hstack justify-between">
-        <h1 font-bold text-3xl>{{ $t("dashboard.my_resumes") }}</h1>
+      <div class="px-2 space-y-4" md="hstack justify-between">
+        <h1 font-black text-5xl uppercase tracking-tighter>{{ $t("dashboard.my_resumes") }}</h1>
         <DashboardFile @update="refresh" />
       </div>
 

@@ -45,7 +45,7 @@ toolbar:
       title: 导出为 PDF
       alert:
         title: 注意
-        content: 在 Windows 上打印时，请在打印设置弹窗中选择“另存为 PDF”，而<b>不是</b>“Microsoft Print to PDF”。
+        content: 在 Windows 上打印时，请在打印设置弹窗中选择"另存为 PDF"，而<b>不是</b>"Microsoft Print to PDF"。
     export_md: 导出为 Markdown
   correct_case:
     title: 专有名词大小写修正
@@ -56,7 +56,7 @@ toolbar:
     note:
       title: 解释
       content: 不会修正全为大写或小写字母的单词（如“GITHUB”或“github”）。
-    btn : 修正
+    btn: 修正
   paper_size: 纸张尺寸
   theme_color: 主题色
   font_family:
@@ -79,7 +79,7 @@ notification:
   duplicate: 已创建简历 "{old}" 的副本 "{new}"
   correct:
     yes: 成功修正 {num} 个单词
-    no : 您的所有拼写都是正确的！
+    no: 您的所有拼写都是正确的！
   import:
     yes: 已成功导入数据！
-    no : 数据格式不正确
+    no: 数据格式不正确

@@ -1,6 +1,7 @@
 <template>
   <EditorToolbarBox :text="$t('toolbar.file.title')" icon="i-carbon:import-export">
     <EditorToolbarFileSave />
+    <EditorToolbarFileHistory />
     <EditorToolbarFileRename />
 
     <hr border-dashed my-2 />
@@ -10,5 +11,9 @@
     <hr border-dashed my-2 />
 
     <EditorToolbarFileImport />
+
+    <hr border-dashed my-2 />
+
+    <EditorToolbarFileGeminiUpdate />
   </EditorToolbarBox>
 </template>

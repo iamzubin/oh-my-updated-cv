@@ -3,6 +3,9 @@
   "version": "0.1.1",
   "private": true,
   "packageManager": "pnpm@9.4.0",
+  "bin": {
+    "oh-my-cv": "./packages/cli/bin/oh-my-cv.js"
+  },
   "type": "module",
   "scripts": {
     "build": "pnpm --filter=site build",
@@ -17,6 +20,10 @@
     "serve": "pnpm --filter=site serve"
   },
   "prettier": "@renovamen/prettier-config",
+  "dependencies": {
+    "chalk": "^5.6.2",
+    "commander": "^14.0.3"
+  },
   "devDependencies": {
     "@renovamen/eslint-config": "^0.1.7",
     "@renovamen/prettier-config": "^0.1.7",

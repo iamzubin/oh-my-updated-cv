@@ -9,16 +9,25 @@
 
 body {
   color: hsl(var(--foreground));
-  background: hsl(var(--accent));
+  background: hsl(var(--background));
+  font-family: "Inter", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
 }
 
 /* `workspace` element should fill the space not occupied by the header */
 header {
-  height: 48px;
+  height: 64px;
 }
 
 .workspace {
-  height: calc(100% - 48px);
+  height: calc(100% - 64px);
 }
 
 /* For icons used in resumes */
@@ -26,7 +35,28 @@ svg.iconify {
   display: inline-block;
 }
 
+/* Custom Brutalist Scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--background));
+  border-left: 2px solid hsl(var(--border));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border: 2px solid hsl(var(--background));
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary));
+}
+
 /* Utility for hiding scrollbar */
+
 .hide-scrollbar {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */

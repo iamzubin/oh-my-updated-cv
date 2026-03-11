@@ -1,7 +1,7 @@
 <template>
   <div
-    class="pane-container overflow-scroll hide-scrollbar bg-secondary"
-    border="4 secondary"
+    class="pane-container overflow-scroll hide-scrollbar bg-muted"
+    border="4 border"
   >
     <VueZoom ref="zoom" :scale="scale">
       <SharedResumeRender

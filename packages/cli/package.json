@@ -1,0 +1,18 @@
+{
+  "name": "@oh-my-cv/cli",
+  "version": "0.1.0",
+  "description": "CLI for Oh My CV - Install and run with one command",
+  "bin": {
+    "oh-my-cv": "./bin/oh-my-cv.js"
+  },
+  "scripts": {
+    "build": "echo 'CLI package - no build needed'",
+    "build-fast:pkg": "echo 'CLI package - no build needed'",
+    "build:pkg": "echo 'CLI package - no build needed'"
+  },
+  "dependencies": {
+    "commander": "^12.1.0",
+    "chalk": "^5.3.0"
+  },
+  "license": "GPL-3.0"
+}
