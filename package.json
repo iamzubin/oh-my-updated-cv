@@ -1,11 +1,8 @@
 {
-  "name": "oh-my-cv",
+  "name": "@oh-my-cv/root",
   "version": "0.1.1",
   "private": true,
   "packageManager": "pnpm@9.4.0",
-  "bin": {
-    "oh-my-cv": "./packages/cli/bin/oh-my-cv.js"
-  },
   "type": "module",
   "scripts": {
     "build": "pnpm --filter=site build",
