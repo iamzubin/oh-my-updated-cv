@@ -7,7 +7,7 @@ import { join } from "path";
 import chalk from "chalk";
 
 const INSTALL_DIR = join(homedir(), ".oh-my-cv");
-const REPO_URL = "https://github.com/iamzubin/oh-my-cv.git";
+const REPO_URL = "https://github.com/iamzubin/oh-my-updated-cv.git";
 const LOG_FILE = join(homedir(), ".oh-my-cv-cli.log");
 
 function log(message, type = "info") {
