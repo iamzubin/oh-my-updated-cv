@@ -3,6 +3,9 @@
     <SharedHeader>
       <template #tail>
         <div class="hstack h-full border-l-2 border-black dark:border-white">
+          <EditorToolbarFileSnapshot />
+        </div>
+        <div class="hstack h-full border-l-2 border-black dark:border-white">
           <EditorToolbarFileHistory />
         </div>
         <div class="hstack h-full border-l-2 border-black dark:border-white">

@@ -28,6 +28,12 @@ Make the resume more relevant by emphasizing skills, experiences, and keywords t
 Do not invent new experiences - only emphasize and rephrase existing content.
 Preserve the original formatting and structure as much as possible.
 
+IMPORTANT: You must return your response in the following JSON format:
+{
+  "markdown": "the updated resume markdown",
+  "label": "a very short (2-4 words) descriptive name for this version based on the job title/company, e.g., 'Google SWE Update'"
+}
+
 Job Description:
 ${jobDescription}
 
@@ -38,15 +44,38 @@ ${markdown}`;
     const prompt = systemPrompt ? `${systemPrompt}\n\n${userPrompt}` : userPrompt;
 
     // Execute Gemini CLI with the full prompt
-    const { stdout } = await execFileAsync("gemini", ["-p", prompt], {
+    const { stdout } = await execFileAsync("gemini", ["-p", prompt, "-o", "json"], {
       timeout: 120000, // 2 minute timeout
       maxBuffer: 1024 * 1024 // 1MB buffer
     });
 
-    // Return the updated markdown
+    const resultJson = JSON.parse(stdout);
+    let modelResponse = resultJson.response;
+
+    // Extract JSON from markdown blocks if present
+    const jsonMatch = modelResponse.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
+    if (jsonMatch) {
+      modelResponse = jsonMatch[1];
+    }
+
+    let result;
+    try {
+      result = JSON.parse(modelResponse);
+    } catch (e) {
+      // Fallback if the model didn't return JSON (e.g., if system prompt forced markdown only)
+      console.warn("Gemini model didn't return JSON, using raw response as markdown");
+      return {
+        success: true,
+        markdown: modelResponse,
+        label: "Gemini Update"
+      };
+    }
+
+    // Return the updated markdown and label
     return {
       success: true,
-      markdown: stdout
+      markdown: result.markdown || modelResponse,
+      label: result.label || "Gemini Update"
     };
   } catch (error: any) {
     console.error("Gemini CLI error:", error);

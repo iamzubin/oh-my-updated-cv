@@ -17,13 +17,13 @@
           <div
             v-bind="api.getDropzoneProps()"
             class="py-14 cursor-pointer hover:(bg-accent text-accent-foreground)"
-            border="~ dashed rounded"
+            border="~ dashed rounded-none"
           >
             <input v-bind="api.getHiddenInputProps()" />
             <div text-center>{{ $t("toolbar.file.import.dialog.from_local") }}</div>
           </div>
 
-          <div v-if="localFile" class="bg-muted text-muted-foreground rounded p-2 mt-2">
+          <div v-if="localFile" class="bg-muted text-muted-foreground rounded-none p-2 mt-2">
             {{ localFile }}
           </div>
         </div>

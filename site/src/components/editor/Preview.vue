@@ -14,7 +14,7 @@
 
     <div
       id="zoom-bar"
-      class="hstack fixed bottom-4 ml-2 shadow-c rounded-full overflow-hidden text-primary-foreground bg-blue-500"
+      class="hstack fixed bottom-4 ml-2 brutalist-shadow brutalist-border rounded-none overflow-hidden text-primary-foreground bg-blue-500"
       lg="bottom-auto top-15 opacity-0 hover:opacity-100 focus-within:opacity-100"
     >
       <button @click="scale *= 1.1" aria-label="Zoom in">

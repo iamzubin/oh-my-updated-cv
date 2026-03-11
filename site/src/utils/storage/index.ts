@@ -29,24 +29,59 @@ export class StorageService {
     this._db = AVAILABLE_SERVICES[service];
   }
 
-  public async getVersions(id: number): Promise<DbResumeVersion[]> {
+  public async getHistory(id: number): Promise<DbResumeHistory> {
     try {
-      const history = await localForage.getItem<DbResumeVersion[]>(`ohmycv_history_${id}`);
-      return history || [];
+      const history = await localForage.getItem<any>(`ohmycv_history_${id}`);
+      
+      // Handle legacy array format
+      if (Array.isArray(history)) {
+        return { nodes: {}, currentId: null };
+      }
+
+      if (!history || typeof history !== "object" || !history.nodes) {
+        return { nodes: {}, currentId: null };
+      }
+
+      return history as DbResumeHistory;
     } catch (e) {
-      return [];
+      return { nodes: {}, currentId: null };
     }
   }
 
-  public async saveVersion(id: number, version: DbResumeVersion) {
+  public async saveVersion(id: number, version: Omit<DbResumeVersionNode, "id" | "parentId">) {
     try {
-      const history = await this.getVersions(id);
-      history.push(version);
-      // Keep only last 50 versions to avoid bloat
-      if (history.length > 50) history.shift();
+      const history = await this.getHistory(id);
+      const nodeId = Date.now().toString();
+      
+      const newNode: DbResumeVersionNode = {
+        ...version,
+        id: nodeId,
+        parentId: history.currentId
+      };
+
+      history.nodes[nodeId] = newNode;
+      history.currentId = nodeId;
+
       await localForage.setItem(`ohmycv_history_${id}`, history);
+      return nodeId;
     } catch (e) {
       console.error("Failed to save version:", e);
+      return null;
+    }
+  }
+
+  public async checkoutVersion(id: number, nodeId: string) {
+    try {
+      const history = await this.getHistory(id);
+      if (history.nodes[nodeId]) {
+        history.currentId = nodeId;
+        await localForage.setItem(`ohmycv_history_${id}`, history);
+        return history.nodes[nodeId];
+      }
+      return null;
+    } catch (e) {
+      console.error("Failed to checkout version:", e);
+      return null;
     }
   }
 

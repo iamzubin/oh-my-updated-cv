@@ -8,7 +8,7 @@
       <button
         v-for="(color, i) in COLOR.PRESET"
         :key="`${i}-${color}`"
-        class="size-6 flex-center rounded text-white ring-when-focus"
+        class="size-6 flex-center rounded-none text-white ring-when-focus"
         :style="{ backgroundColor: color }"
         @click="api.setValue(color)"
       >
@@ -21,13 +21,13 @@
       <div
         v-bind="api.getControlProps()"
         :class="[
-          'w-full hstack h-9 gap-x-2 px-2 py-1 rounded-md border-1.5 data-[focus]:border-primary',
+          'w-full hstack h-9 gap-x-2 px-2 py-1 rounded-none border-1.5 data-[focus]:border-primary',
           api.open && 'border-primary'
         ]"
       >
         <button
           v-bind="api.getTriggerProps()"
-          class="size-4 rounded overflow-hidden ring-when-focus"
+          class="size-4 rounded-none overflow-hidden ring-when-focus"
         >
           <div class="size-full" v-bind="api.getSwatchProps({ value: api.value })" />
         </button>
@@ -40,8 +40,8 @@
       <div v-bind="api.getPositionerProps()" w-full ml-2>
         <div
           v-bind="api.getContentProps()"
-          class="bg-background overflow-hidden shadow-md"
-          border="~ rounded-md"
+          class="bg-background overflow-hidden brutalist-shadow"
+          border="~ rounded-none"
         >
           <div v-bind="api.getAreaProps()">
             <div v-bind="api.getAreaBackgroundProps()" class="w-full h-30" />
@@ -58,7 +58,7 @@
               v-bind="api.getEyeDropperTriggerProps()"
               variant="ghost"
               size="icon"
-              class="size-7 rounded"
+              class="size-7 rounded-none"
             >
               <span i-bx:bxs-eyedropper text-lg />
             </UiButton>
@@ -66,7 +66,7 @@
             <div v-bind="api.getChannelSliderProps({ channel: 'hue' })" flex-1>
               <div
                 v-bind="api.getChannelSliderTrackProps({ channel: 'hue' })"
-                class="w-full h-2.5 rounded-full"
+                class="w-full h-2.5 rounded-none"
               />
               <div
                 v-bind="api.getChannelSliderThumbProps({ channel: 'hue' })"

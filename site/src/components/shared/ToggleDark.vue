@@ -1,14 +1,16 @@
 <template>
   <UiButton
     variant="ghost-secondary"
-    size="round"
+    size="sm"
+    v-bind="$attrs"
+    class="relative flex-center"
     :aria-label="$t('toggle_theme')"
     @click="switchMode"
   >
     <div
       v-for="mode in modes"
       :class="[
-        'absolute transition-transform duration-500',
+        'absolute inset-0 m-auto transition-transform duration-500',
         mode.icon,
         transform(mode.value)
       ]"

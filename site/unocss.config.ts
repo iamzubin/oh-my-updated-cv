@@ -21,10 +21,10 @@ export default defineConfig({
         "ring-offset-background focus-visible:(outline-none ring-2 ring-ring ring-offset-2)",
       "shadow-c": "shadow shadow-blue-200 dark:shadow-black",
       "brutalist-border": "border-2 border-black dark:border-[hsl(20,14%,85%)]",
-      "brutalist-shadow": "shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_hsla(20,14%,85%,1)]",
-      "brutalist-shadow-sm": "shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_hsla(20,14%,85%,1)]",
+      "brutalist-shadow": "shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_hsla(20,14%,85%,0.3)]",
+      "brutalist-shadow-sm": "shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] dark:shadow-[2px_2px_0px_0px_hsla(20,14%,85%,0.3)]",
       "brutalist-card": "brutalist-border brutalist-shadow bg-card rounded-none transition-all",
-      "brutalist-button": "brutalist-border brutalist-shadow rounded-none transition-all active:(translate-x-[2px] translate-y-[2px] shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]) dark:active:shadow-[2px_2px_0px_0px_hsla(20,14%,85%,1)]",
+      "brutalist-button": "brutalist-border brutalist-shadow rounded-none transition-all active:(translate-x-[2px] translate-y-[2px] shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]) dark:active:shadow-[2px_2px_0px_0px_hsla(20,14%,85%,0.3)]",
       "resume-card":
         "relative mx-auto rounded-none duration-150 hover:(-translate-y-2 brutalist-shadow)"
     }

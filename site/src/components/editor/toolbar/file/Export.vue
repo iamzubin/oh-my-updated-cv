@@ -12,7 +12,7 @@
           {{ $t("toolbar.file.export_pdf.title") }}
         </UiButton>
       </UiTooltipTrigger>
-      <UiTooltipContent side="bottom" class="w-54 p-0 rounded border-destructive/60">
+      <UiTooltipContent side="bottom" class="w-54 p-0 rounded-none border-destructive/60">
         <UiAlert variant="destructive" class="border-none rounded-none">
           <UiAlertTitle>
             {{ $t("toolbar.file.export_pdf.alert.title") }}

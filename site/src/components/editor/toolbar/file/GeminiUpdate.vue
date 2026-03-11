@@ -13,14 +13,12 @@
     </UiDialogTrigger>
 
     <UiDialogContent class="sm:max-w-lg tactical-dialog">
-      <div class="tactical-header">
-        <div class="tactical-corner tactical-corner--tl" />
-        <div class="tactical-corner tactical-corner--tr" />
-        <h2 class="tactical-title">TACTICAL RESUME UPDATE</h2>
-        <p class="tactical-subtitle">// Initialize Gemini protocol for job targeting</p>
+      <div class="px-6 pt-10 pb-6 bg-accent border-b-2 border-black dark:border-white">
+        <h2 class="font-black text-2xl text-white uppercase tracking-tighter">Gemini Protocol</h2>
+        <p class="font-bold text-xs text-white/80 mt-1 uppercase">// Initialize job-targeted optimization</p>
       </div>
 
-      <div class="tactical-content space-y-4">
+      <div class="tactical-content space-y-6 px-8 py-8 bg-background border-b-2 border-black dark:border-white">
         <GeminiTacticalInput
           v-model="jobDescription"
           label="Job Description"
@@ -48,23 +46,26 @@
         </div>
       </div>
 
-      <div class="tactical-footer">
-        <GeminiTacticalButton variant="secondary" size="sm" @click="openSettings">
+      <div class="p-6 bg-muted flex justify-between items-center px-8">
+        <GeminiTacticalButton variant="secondary" size="sm" class="h-10 px-6" @click="openSettings">
           <span class="i-tabler:settings mr-2" />
           CONFIG
         </GeminiTacticalButton>
-        <div class="flex gap-2">
-          <GeminiTacticalButton
-            variant="ghost"
-            size="sm"
-            @click="isOpen = false"
-            :disabled="isUpdating"
-          >
-            ABORT
-          </GeminiTacticalButton>
+        <div class="flex gap-4 items-center">
+          <UiDialogClose as-child>
+            <GeminiTacticalButton
+              variant="ghost"
+              size="sm"
+              class="h-10 px-6"
+              :disabled="isUpdating"
+            >
+              ABORT
+            </GeminiTacticalButton>
+          </UiDialogClose>
           <GeminiTacticalButton
             variant="primary"
             size="sm"
+            class="h-10 px-8"
             :loading="isUpdating"
             :disabled="!jobDescription.trim()"
             @click="handleUpdate"
@@ -80,14 +81,12 @@
   <!-- Tactical Settings Dialog -->
   <UiDialog v-model:open="isSettingsOpen">
     <UiDialogContent class="sm:max-w-lg tactical-dialog">
-      <div class="tactical-header">
-        <div class="tactical-corner tactical-corner--tl" />
-        <div class="tactical-corner tactical-corner--tr" />
-        <h2 class="tactical-title">SYSTEM CONFIGURATION</h2>
-        <p class="tactical-subtitle">// Modify Gemini operational parameters</p>
+      <div class="px-6 pt-10 pb-6 bg-accent border-b-2 border-black dark:border-white">
+        <h2 class="font-black text-2xl text-white uppercase tracking-tighter">System Configuration</h2>
+        <p class="font-bold text-xs text-white/80 mt-1 uppercase">// Modify Gemini operational parameters</p>
       </div>
 
-      <div class="tactical-content space-y-4">
+      <div class="tactical-content space-y-6 px-8 py-8 bg-background border-b-2 border-black dark:border-white">
         <GeminiTacticalToggle v-model="settings.enabled" label="Enable Gemini Protocol" />
 
         <GeminiTacticalInput
@@ -108,11 +107,11 @@
         </div>
       </div>
 
-      <div class="tactical-footer">
-        <GeminiTacticalButton variant="secondary" size="sm" @click="resetSettings">
+      <div class="p-6 bg-muted flex justify-end gap-4 px-8">
+        <GeminiTacticalButton variant="secondary" size="sm" class="h-10 px-6" @click="resetSettings">
           RESET
         </GeminiTacticalButton>
-        <GeminiTacticalButton variant="primary" size="sm" @click="isSettingsOpen = false">
+        <GeminiTacticalButton variant="primary" size="sm" class="h-10 px-8" @click="isSettingsOpen = false">
           CONFIRM
         </GeminiTacticalButton>
       </div>
@@ -144,13 +143,25 @@ const handleUpdate = async () => {
   if (!jobDescription.value.trim() || !data.resumeId) return;
 
   try {
-    // Snapshot before rewrite
-    await storageService.saveVersion(data.resumeId, {
-      timestamp: Date.now(),
-      markdown: data.markdown,
-      css: data.css,
-      styles: toRaw(useStyleStore().styles)
-    });
+    const history = await storageService.getHistory(data.resumeId);
+    const latestNode = history.currentId ? history.nodes[history.currentId] : null;
+    const styles = useStyleStore().styles;
+
+    // Check if user edited since last snapshot
+    const hasEdits = !latestNode || 
+      latestNode.markdown !== data.markdown || 
+      latestNode.css !== data.css;
+
+    if (hasEdits) {
+      // Snapshot manual changes before Gemini rewrite
+      await storageService.saveVersion(data.resumeId, {
+        timestamp: Date.now(),
+        markdown: data.markdown,
+        css: data.css,
+        styles: toRaw(styles),
+        label: "Manual Edits"
+      });
+    }
 
     const result = await updateResume({
       markdown: data.markdown,
@@ -163,11 +174,21 @@ const handleUpdate = async () => {
 
     if (result.success) {
       setAndSyncToMonaco("markdown", result.markdown);
+      
+      // Automatic labeled snapshot AFTER Gemini generation
+      await storageService.saveVersion(data.resumeId, {
+        timestamp: Date.now(),
+        markdown: result.markdown,
+        css: data.css,
+        styles: toRaw(styles),
+        label: result.label || "Gemini Update"
+      });
+
       isOpen.value = false;
       jobDescription.value = "";
       toast({
         title: "Protocol Complete",
-        description: "Resume optimized for target position"
+        description: `Optimized: ${result.label || "Resume updated"}`
       });
     }
   } catch (err: any) {

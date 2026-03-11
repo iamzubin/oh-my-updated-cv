@@ -49,9 +49,9 @@
 
       <slot name="tail" />
 
-      <div class="h-full border-l-2 border-black dark:border-white flex items-center px-2">
-        <SharedToggleDark />
-      </div>
+      <SharedToggleDark
+        class="h-full border-l-2 border-black dark:border-white !shadow-none !active:translate-x-0 !active:translate-y-0 px-2"
+      />
 
       <UiButton
         as="a"
