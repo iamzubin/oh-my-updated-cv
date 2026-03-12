@@ -112,19 +112,22 @@ interface Provider {
 }
 
 const providers: Provider[] = [
-  { value: "gemini", label: "GEMINI CLI" },
-  { value: "claude", label: "CLAUDE API" },
-  { value: "opencode-zen", label: "OPENCODE ZEN" }
+  { value: "opencode-zen", label: "ZEN (FREE)" },
+  { value: "gemini", label: "GEMINI" },
+  { value: "claude", label: "CLAUDE" },
+  { value: "custom", label: "CUSTOM" }
 ];
 
 const providerHint = computed(() => {
   switch (localSettings.value.provider) {
     case "gemini":
-      return "Get from ai.google.dev";
+      return "Get from aistudio.google.com/app/apikey";
     case "claude":
       return "Get from anthropic.com/settings/api-keys";
     case "opencode-zen":
       return "Get from opencode.ai/zen";
+    case "custom":
+      return "Bring your own provider";
     default:
       return "";
   }
