@@ -3,75 +3,88 @@
   <UiDialog v-model:open="isOpen">
     <UiDialogTrigger as-child>
       <UiButton
-        class="h-full px-4 gap-x-2 !shadow-none !active:translate-x-0 !active:translate-y-0"
+        class="h-full px-4 gap-x-2 !shadow-none"
         variant="ghost-secondary"
         size="sm"
       >
-        <span i-tabler:sparkles text-xl />
-        <span class="hide-on-mobile text-lg uppercase font-bold">Gemini</span>
+        <span class="hide-on-mobile text-sm">[ {{ providerLabel }} ]</span>
       </UiButton>
     </UiDialogTrigger>
 
-    <UiDialogContent class="sm:max-w-lg tactical-dialog">
-      <div class="px-6 pt-10 pb-6 bg-accent border-b-2 border-black dark:border-white">
-        <h2 class="font-black text-2xl text-white uppercase tracking-tighter">Gemini Protocol</h2>
-        <p class="font-bold text-xs text-white/80 mt-1 uppercase">// Initialize job-targeted optimization</p>
+    <UiDialogContent
+      class="sm:max-w-lg p-0 overflow-hidden rounded-none border border-border"
+    >
+      <div class="px-6 py-4 border-b border-border">
+        <h2 class="text-lg">=== {{ providerLabel }} Protocol ===</h2>
+        <p class="text-xs text-muted-foreground mt-1">
+          Initialize job-targeted optimization
+        </p>
       </div>
 
-      <div class="tactical-content space-y-6 px-8 py-8 bg-background border-b-2 border-black dark:border-white">
+      <div class="space-y-6 px-8 py-6 bg-background border-b border-border">
         <GeminiTacticalInput
           v-model="jobDescription"
           label="Job Description"
-          hint="REQUIRED"
+          hint="[ REQUIRED ]"
           placeholder="Paste target job description here..."
           :rows="6"
         />
 
-        <div v-if="error" class="tactical-error">
-          <span class="tactical-error-icon">!</span>
-          <span class="tactical-error-text">{{ error }}</span>
+        <div
+          v-if="error"
+          class="flex items-center gap-3 px-4 py-3 bg-danger/10 border border-danger text-danger text-sm"
+        >
+          <span>!</span>
+          <span>{{ error }}</span>
         </div>
 
-        <div class="tactical-status">
-          <span class="tactical-status-label">System Prompt:</span>
+        <div class="flex items-center gap-2 text-xs tracking-tight">
+          <span class="text-muted-foreground">System Prompt:</span>
           <span
-            :class="
-              settings.systemPrompt
-                ? 'tactical-status-active'
-                : 'tactical-status-inactive'
-            "
+            :class="llmSettings.systemPrompt ? 'text-primary' : 'text-muted-foreground'"
           >
-            {{ settings.systemPrompt ? "CONFIGURED" : "STANDARD" }}
+            [{{ llmSettings.systemPrompt ? "CONFIGURED" : "STANDARD" }}]
           </span>
+        </div>
+
+        <div
+          v-if="!llmSettings.apiKey"
+          class="flex items-center gap-3 px-4 py-3 bg-warning/10 border border-warning text-warning text-sm"
+        >
+          <span>!</span>
+          <span>API key not configured. Please configure in settings.</span>
         </div>
       </div>
 
-      <div class="p-6 bg-muted flex justify-between items-center px-8">
-        <GeminiTacticalButton variant="secondary" size="sm" class="h-10 px-6" @click="openSettings">
-          <span class="i-tabler:settings mr-2" />
-          CONFIG
+      <div class="p-6 bg-muted/30 flex justify-between items-center px-8">
+        <GeminiTacticalButton
+          variant="secondary"
+          size="sm"
+          class="h-8"
+          @click="openSettings"
+        >
+          [ config ]
         </GeminiTacticalButton>
         <div class="flex gap-4 items-center">
           <UiDialogClose as-child>
             <GeminiTacticalButton
               variant="ghost"
               size="sm"
-              class="h-10 px-6"
+              class="h-8"
               :disabled="isUpdating"
             >
-              ABORT
+              [ abort ]
             </GeminiTacticalButton>
           </UiDialogClose>
           <GeminiTacticalButton
             variant="primary"
             size="sm"
-            class="h-10 px-8"
+            class="h-8"
             :loading="isUpdating"
-            :disabled="!jobDescription.trim()"
+            :disabled="!jobDescription.trim() || !llmSettings.apiKey"
             @click="handleUpdate"
           >
-            <span v-if="!isUpdating" class="i-tabler:sparkles mr-2" />
-            EXECUTE
+            [ execute ]
           </GeminiTacticalButton>
         </div>
       </div>
@@ -80,52 +93,32 @@
 
   <!-- Tactical Settings Dialog -->
   <UiDialog v-model:open="isSettingsOpen">
-    <UiDialogContent class="sm:max-w-lg tactical-dialog">
-      <div class="px-6 pt-10 pb-6 bg-accent border-b-2 border-black dark:border-white">
-        <h2 class="font-black text-2xl text-white uppercase tracking-tighter">System Configuration</h2>
-        <p class="font-bold text-xs text-white/80 mt-1 uppercase">// Modify Gemini operational parameters</p>
-      </div>
-
-      <div class="tactical-content space-y-6 px-8 py-8 bg-background border-b-2 border-black dark:border-white">
-        <GeminiTacticalToggle v-model="settings.enabled" label="Enable Gemini Protocol" />
-
-        <GeminiTacticalInput
-          v-model="settings.systemPrompt"
-          label="System Prompt"
-          hint="OPTIONAL"
-          placeholder="Enter custom directives for Gemini..."
-          :rows="5"
-          :disabled="!settings.enabled"
-        />
-
-        <div class="tactical-info">
-          <span class="tactical-info-marker">[i]</span>
-          <span class="tactical-info-text"
-            >System prompt prepends to all requests. Use to customize tone, style, or
-            constraints.</span
-          >
-        </div>
-      </div>
-
-      <div class="p-6 bg-muted flex justify-end gap-4 px-8">
-        <GeminiTacticalButton variant="secondary" size="sm" class="h-10 px-6" @click="resetSettings">
-          RESET
-        </GeminiTacticalButton>
-        <GeminiTacticalButton variant="primary" size="sm" class="h-10 px-8" @click="isSettingsOpen = false">
-          CONFIRM
-        </GeminiTacticalButton>
-      </div>
+    <UiDialogContent
+      class="sm:max-w-lg p-0 overflow-hidden rounded-none border border-border"
+    >
+      <GeminiTacticalSettings @save="isSettingsOpen = false" @reset="handleReset" />
     </UiDialogContent>
   </UiDialog>
 </template>
 
 <script lang="ts" setup>
-import { useGemini, useGeminiSettings } from "~/composables";
+import { useLLMProvider, useLLMProviderSettings } from "~/composables";
+import type { Provider } from "~/composables/llm";
 
 const { data, setAndSyncToMonaco } = useDataStore();
-const { isUpdating, error, updateResume } = useGemini();
-const { settings, resetSettings } = useGeminiSettings();
+const { isUpdating, error, updateResume } = useLLMProvider();
+const { settings: llmSettings, resetSettings } = useLLMProviderSettings();
 const { toast } = useToast();
+
+const providerLabels: Record<Provider, string> = {
+  gemini: "GEMINI",
+  claude: "CLAUDE",
+  "opencode-zen": "ZEN"
+};
+
+const providerLabel = computed(
+  () => providerLabels[llmSettings.value.provider as Provider] || "LLM"
+);
 
 const isOpen = ref(false);
 const isSettingsOpen = ref(false);
@@ -139,21 +132,30 @@ const openSettings = () => {
   isSettingsOpen.value = true;
 };
 
+const handleReset = () => {
+  resetSettings();
+};
+
 const handleUpdate = async () => {
   if (!jobDescription.value.trim() || !data.resumeId) return;
+
+  if (!llmSettings.value.apiKey) {
+    toast({
+      title: "Configuration Error",
+      description: "Please configure your API key in settings"
+    });
+    return;
+  }
 
   try {
     const history = await storageService.getHistory(data.resumeId);
     const latestNode = history.currentId ? history.nodes[history.currentId] : null;
     const styles = useStyleStore().styles;
 
-    // Check if user edited since last snapshot
-    const hasEdits = !latestNode || 
-      latestNode.markdown !== data.markdown || 
-      latestNode.css !== data.css;
+    const hasEdits =
+      !latestNode || latestNode.markdown !== data.markdown || latestNode.css !== data.css;
 
     if (hasEdits) {
-      // Snapshot manual changes before Gemini rewrite
       await storageService.saveVersion(data.resumeId, {
         timestamp: Date.now(),
         markdown: data.markdown,
@@ -167,21 +169,20 @@ const handleUpdate = async () => {
       markdown: data.markdown,
       jobDescription: jobDescription.value,
       systemPrompt:
-        settings.value.enabled && settings.value.systemPrompt
-          ? settings.value.systemPrompt
+        llmSettings.value.enabled && llmSettings.value.systemPrompt
+          ? llmSettings.value.systemPrompt
           : undefined
     });
 
     if (result.success) {
       setAndSyncToMonaco("markdown", result.markdown);
-      
-      // Automatic labeled snapshot AFTER Gemini generation
+
       await storageService.saveVersion(data.resumeId, {
         timestamp: Date.now(),
         markdown: result.markdown,
         css: data.css,
         styles: toRaw(styles),
-        label: result.label || "Gemini Update"
+        label: result.label || "LLM Update"
       });
 
       isOpen.value = false;
@@ -192,82 +193,7 @@ const handleUpdate = async () => {
       });
     }
   } catch (err: any) {
-    console.error("Gemini protocol failed:", err);
+    console.error("LLM protocol failed:", err);
   }
 };
 </script>
-
-<style scoped>
-.tactical-dialog {
-  @apply bg-card brutalist-border rounded-none brutalist-shadow;
-  @apply p-0 overflow-hidden;
-}
-
-.tactical-header {
-  @apply relative px-6 pt-8 pb-6;
-  @apply bg-accent border-b-2 border-black dark:border-white;
-}
-
-.tactical-corner {
-  @apply hidden;
-}
-
-.tactical-title {
-  @apply font-black text-2xl text-white uppercase tracking-tighter;
-}
-
-.tactical-subtitle {
-  @apply font-bold text-xs text-white/80 mt-1 uppercase;
-}
-
-.tactical-content {
-  @apply px-6 py-6;
-}
-
-.tactical-footer {
-  @apply flex justify-between items-center px-6 py-6;
-  @apply border-t-2 border-black dark:border-white;
-  @apply bg-muted/50;
-}
-
-.tactical-error {
-  @apply flex items-center gap-3 px-4 py-3;
-  @apply bg-danger text-white brutalist-border;
-  @apply font-bold text-sm uppercase;
-}
-
-.tactical-error-icon {
-  @apply w-6 h-6 flex items-center justify-center;
-  @apply bg-white text-danger text-lg font-black brutalist-border;
-}
-
-.tactical-status {
-  @apply flex items-center gap-2 font-black text-xs uppercase tracking-tight;
-}
-
-.tactical-status-label {
-  @apply text-muted-foreground;
-}
-
-.tactical-status-active {
-  @apply text-accent-foreground bg-accent px-2 py-0.5;
-}
-
-.tactical-status-inactive {
-  @apply text-muted-foreground;
-}
-
-.tactical-info {
-  @apply flex items-start gap-3 px-4 py-3;
-  @apply bg-secondary/10 brutalist-border;
-  @apply font-bold text-xs text-foreground uppercase;
-}
-
-.tactical-info-marker {
-  @apply text-primary font-black;
-}
-
-.tactical-info-text {
-  @apply leading-relaxed;
-}
-</style>

@@ -3,3 +3,4 @@ export { useStyleStore } from "./stores/style";
 export { useMonaco } from "./monaco";
 export { useConstant } from "./constant";
 export { useGemini, useGeminiSettings } from "./gemini";
+export { useLLMProvider, useLLMProviderSettings } from "./llm";
