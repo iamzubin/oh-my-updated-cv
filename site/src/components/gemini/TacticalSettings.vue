@@ -162,13 +162,14 @@ const handleReset = () => {
 
 <style scoped>
 .tactical-settings {
-  @apply bg-card border border-border rounded-none;
+  @apply bg-slate-950 border border-slate-700 rounded-none;
   @apply overflow-hidden font-mono;
 }
 
 .tactical-settings-header {
   @apply relative px-6 pt-8 pb-6;
-  @apply border-b border-border;
+  @apply border-b border-slate-700;
+  @apply bg-gradient-to-r from-red-950/50 to-transparent;
 }
 
 .tactical-corner {
@@ -176,11 +177,14 @@ const handleReset = () => {
 }
 
 .tactical-settings-title {
-  @apply text-xl text-foreground uppercase;
+  @apply text-xl uppercase tracking-wider;
+  @apply text-red-400;
+  text-shadow: 0 0 10px theme("colors.red.500" / 50%);
 }
 
 .tactical-settings-subtitle {
-  @apply text-xs opacity-70 mt-1 uppercase;
+  @apply text-xs mt-1 uppercase;
+  @apply text-slate-500;
 }
 
 .tactical-settings-content {
@@ -189,8 +193,8 @@ const handleReset = () => {
 
 .tactical-settings-footer {
   @apply flex justify-end gap-4 px-6 py-6;
-  @apply border-t border-border;
-  @apply bg-background;
+  @apply border-t border-slate-700;
+  @apply bg-slate-900/50;
 }
 
 .provider-section {
@@ -202,11 +206,13 @@ const handleReset = () => {
 }
 
 .provider-label-text {
-  @apply font-mono text-sm text-foreground tracking-tight;
+  @apply font-mono text-sm tracking-tight;
+  @apply text-cyan-400 uppercase;
 }
 
 .provider-hint {
-  @apply font-mono text-xs text-muted-foreground;
+  @apply font-mono text-xs;
+  @apply text-slate-500;
 }
 
 .provider-options {
@@ -215,18 +221,19 @@ const handleReset = () => {
 
 .provider-option {
   @apply px-4 py-2 text-xs font-bold uppercase tracking-wider;
-  @apply border border-border bg-transparent text-foreground;
-  @apply hover:border-primary hover:text-primary;
-  @apply disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-border disabled:hover:text-foreground;
+  @apply border border-slate-700 bg-slate-900 text-slate-400;
+  @apply hover:border-cyan-500 hover:text-cyan-400;
+  @apply disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-slate-700 disabled:hover:text-slate-400;
   @apply transition-all duration-150;
 }
 
 .provider-option--active {
-  @apply border-primary bg-primary text-primary-foreground;
+  @apply border-red-500 bg-red-900/30 text-red-400;
+  box-shadow: 0 0 10px theme("colors.red.500" / 30%);
 }
 
 .provider-option--active:hover {
-  @apply border-primary bg-primary text-primary-foreground;
+  @apply border-red-500 bg-red-900/30 text-red-400;
 }
 
 .api-key-section {
@@ -235,26 +242,31 @@ const handleReset = () => {
 
 .api-key-input {
   @apply w-full p-3 min-h-[42px];
-  @apply bg-background border border-border rounded-none;
-  @apply font-mono text-sm text-foreground;
-  @apply placeholder:text-muted-foreground/50;
-  @apply focus:outline-none focus:ring-1 focus:ring-primary;
+  @apply bg-slate-900 border border-slate-700 rounded-none;
+  @apply font-mono text-sm text-slate-200;
+  @apply placeholder:text-slate-600;
+  @apply focus:outline-none focus:border-cyan-500;
   @apply transition-all duration-150;
   @apply disabled:opacity-50 disabled:cursor-not-allowed;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .api-key-input:focus {
   @apply shadow-none;
+  box-shadow:
+    inset 0 2px 4px rgba(0, 0, 0, 0.3),
+    0 0 10px theme("colors.cyan.500" / 20%);
 }
 
 .tactical-info {
   @apply flex items-start gap-3 px-4 py-3;
-  @apply bg-muted/20 border border-border;
-  @apply text-xs text-foreground uppercase;
+  @apply bg-slate-900/50 border border-slate-700;
+  @apply text-xs uppercase;
+  @apply text-slate-400;
 }
 
 .tactical-info-marker {
-  @apply text-primary font-bold;
+  @apply text-yellow-400 font-bold;
 }
 
 .tactical-info-text {

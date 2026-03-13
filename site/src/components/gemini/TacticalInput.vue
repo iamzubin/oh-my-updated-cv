@@ -37,11 +37,6 @@ const modelValue = useVModel(props, "modelValue", emit, {
     </label>
 
     <div class="tactical-input-container">
-      <div class="tactical-input-corner tactical-input-corner--tl" />
-      <div class="tactical-input-corner tactical-input-corner--tr" />
-      <div class="tactical-input-corner tactical-input-corner--bl" />
-      <div class="tactical-input-corner tactical-input-corner--br" />
-
       <textarea
         v-model="modelValue"
         :rows="rows"
@@ -65,11 +60,13 @@ const modelValue = useVModel(props, "modelValue", emit, {
 }
 
 .tactical-input-label-text {
-  @apply font-black text-sm text-foreground uppercase tracking-tight;
+  @apply font-mono text-sm tracking-tight;
+  @apply text-cyan-400 uppercase;
 }
 
 .tactical-input-hint {
-  @apply font-bold text-xs text-muted-foreground;
+  @apply font-mono text-xs;
+  @apply text-slate-500;
 }
 
 .tactical-input-container {
@@ -78,23 +75,23 @@ const modelValue = useVModel(props, "modelValue", emit, {
 
 .tactical-input {
   @apply w-full min-h-[120px] p-4;
-  @apply bg-background brutalist-border rounded-none;
-  @apply font-bold text-sm text-foreground leading-relaxed;
-  @apply placeholder:text-muted-foreground/50;
-  @apply focus:outline-none focus:ring-2 focus:ring-primary;
+  @apply bg-slate-900/80 border border-slate-700 rounded-none;
+  @apply font-mono text-sm text-slate-200 leading-relaxed;
+  @apply placeholder:text-slate-600;
+  @apply focus:outline-none focus:border-cyan-500;
   @apply transition-all duration-150;
   @apply resize-y;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .tactical-input:focus {
-  @apply brutalist-shadow-sm;
+  @apply shadow-none;
+  box-shadow:
+    inset 0 2px 4px rgba(0, 0, 0, 0.3),
+    0 0 10px theme("colors.cyan.500" / 20%);
 }
 
 .tactical-input--disabled {
   @apply opacity-50 cursor-not-allowed;
-}
-
-.tactical-input-corner {
-  @apply hidden;
 }
 </style>

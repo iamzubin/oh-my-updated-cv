@@ -46,37 +46,57 @@ const sizeStyles = {
     :disabled="disabled || loading"
     @click="emit('click', $event)"
   >
+    <span class="sw-bracket">[</span>
     <span v-if="loading" class="tactical-loading mr-2" />
     <slot />
+    <span class="sw-bracket">]</span>
   </button>
 </template>
 
 <style scoped>
 .tactical-btn {
-  @apply relative font-black uppercase tracking-tighter;
-  @apply brutalist-button transition-all duration-150;
-  @apply flex items-center justify-center gap-2;
+  @apply relative font-mono transition-all duration-150;
+  @apply flex items-center justify-center gap-1;
+  @apply border bg-background rounded-none;
+  @apply uppercase tracking-wider;
 }
 
 .tactical-btn-primary {
-  @apply bg-primary text-primary-foreground hover:bg-primary/90;
+  @apply border-red-500 text-red-400;
+  @apply hover:bg-red-600 hover:text-white;
+  box-shadow: 0 0 8px theme("colors.red.500" / 30%);
+}
+
+.tactical-btn-primary:hover {
+  box-shadow: 0 0 16px theme("colors.red.500" / 60%);
 }
 
 .tactical-btn-secondary {
-  @apply bg-secondary text-secondary-foreground hover:bg-secondary/90;
+  @apply border-yellow-500 text-yellow-400;
+  @apply hover:bg-yellow-600 hover:text-black;
+  box-shadow: 0 0 8px theme("colors.yellow.500" / 30%);
+}
+
+.tactical-btn-secondary:hover {
+  box-shadow: 0 0 16px theme("colors.yellow.500" / 60%);
 }
 
 .tactical-btn-danger {
-  @apply bg-danger text-danger-foreground hover:bg-danger/90;
+  @apply border-orange-500 text-orange-400;
+  @apply hover:bg-orange-600 hover:text-white;
 }
 
 .tactical-btn-ghost {
-  @apply bg-transparent border-none shadow-none text-foreground;
-  @apply hover:bg-accent/10 active:translate-x-0 active:translate-y-0 active:shadow-none;
+  @apply border-transparent bg-transparent shadow-none text-foreground;
+  @apply hover:bg-slate-700 hover:text-white;
+}
+
+.sw-bracket {
+  @apply opacity-60;
 }
 
 .tactical-loading {
-  @apply inline-block w-4 h-4 border-2 border-current border-t-transparent rounded-full;
+  @apply inline-block w-3 h-3 border border-current border-t-transparent rounded-full;
   animation: tactical-spin 1s linear infinite;
 }
 
