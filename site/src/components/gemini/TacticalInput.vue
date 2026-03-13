@@ -88,7 +88,7 @@ const modelValue = useVModel(props, "modelValue", emit, {
   @apply shadow-none;
   box-shadow:
     inset 0 2px 4px rgba(0, 0, 0, 0.3),
-    0 0 10px theme("colors.cyan.500" / 20%);
+    0 0 10px rgba(6, 182, 212, 0.2);
 }
 
 .tactical-input--disabled {

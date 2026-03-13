@@ -78,7 +78,7 @@ const toggle = () => {
 
 .tactical-toggle-track--active {
   @apply bg-red-600 border-red-500;
-  box-shadow: 0 0 10px theme("colors.red.500" / 50%);
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
 }
 
 .tactical-toggle-thumb {
@@ -88,7 +88,7 @@ const toggle = () => {
 
 .tactical-toggle-thumb--active {
   @apply translate-x-5 bg-white;
-  box-shadow: 0 0 8px theme("colors.white" / 80%);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
 }
 
 .tactical-toggle-label {

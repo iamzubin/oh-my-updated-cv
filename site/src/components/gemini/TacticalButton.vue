@@ -64,21 +64,21 @@ const sizeStyles = {
 .tactical-btn-primary {
   @apply border-red-500 text-red-400;
   @apply hover:bg-red-600 hover:text-white;
-  box-shadow: 0 0 8px theme("colors.red.500" / 30%);
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.3);
 }
 
 .tactical-btn-primary:hover {
-  box-shadow: 0 0 16px theme("colors.red.500" / 60%);
+  box-shadow: 0 0 16px rgba(239, 68, 68, 0.6);
 }
 
 .tactical-btn-secondary {
   @apply border-yellow-500 text-yellow-400;
   @apply hover:bg-yellow-600 hover:text-black;
-  box-shadow: 0 0 8px theme("colors.yellow.500" / 30%);
+  box-shadow: 0 0 8px rgba(234, 179, 8, 0.3);
 }
 
 .tactical-btn-secondary:hover {
-  box-shadow: 0 0 16px theme("colors.yellow.500" / 60%);
+  box-shadow: 0 0 16px rgba(234, 179, 8, 0.6);
 }
 
 .tactical-btn-danger {

@@ -179,7 +179,7 @@ const handleReset = () => {
 .tactical-settings-title {
   @apply text-xl uppercase tracking-wider;
   @apply text-red-400;
-  text-shadow: 0 0 10px theme("colors.red.500" / 50%);
+  text-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
 }
 
 .tactical-settings-subtitle {
@@ -229,7 +229,7 @@ const handleReset = () => {
 
 .provider-option--active {
   @apply border-red-500 bg-red-900/30 text-red-400;
-  box-shadow: 0 0 10px theme("colors.red.500" / 30%);
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
 }
 
 .provider-option--active:hover {
@@ -255,7 +255,7 @@ const handleReset = () => {
   @apply shadow-none;
   box-shadow:
     inset 0 2px 4px rgba(0, 0, 0, 0.3),
-    0 0 10px theme("colors.cyan.500" / 20%);
+    0 0 10px rgba(6, 182, 212, 0.2);
 }
 
 .tactical-info {
